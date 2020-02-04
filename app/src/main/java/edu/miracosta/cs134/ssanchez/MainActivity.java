@@ -10,12 +10,24 @@ package edu.miracosta.cs134.ssanchez;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import java.text.NumberFormat;
+import java.util.Locale;
+
+import edu.miracosta.cs134.ssanchez.model.Bill;
+
 public class MainActivity extends AppCompatActivity {
+
+
+    private Bill currentBill;
+
+
     // Constants
     private static final String MONEY_FORMAT = "$%,.2f";
 
@@ -27,27 +39,79 @@ public class MainActivity extends AppCompatActivity {
     private TextView tipAmountTextView;
     private TextView totalAmountTextView;
 
+    // instance variables to format output (currenty and percent)
+    NumberFormat currency = NumberFormat.getCurrencyInstance(Locale.getDefault());
+    NumberFormat percent = NumberFormat.getPercentInstance();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+
         // Assign References
+        currentBill = new Bill();
+
         tipPercentageSeekBar = findViewById(R.id.tipPercentageSeekBar);
         tipPercentageTextView = findViewById(R.id.tipPercentageTexttView);
         inputAmountTextView = findViewById(R.id.amountEditText);
         tipAmountTextView = findViewById(R.id.tipAmountTextView);
         totalAmountTextView = findViewById(R.id.totalAmountTextView);
 
-        inputAmountTextView.setOnClickListener(new View.OnClickListener() {
+        currentBill.setTipPercent(tipPercentageSeekBar.getProgress() / 100.0);
+
+        // implement interface for the EditText
+//        inputAmountTextView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                doCalculations(tipPercentageSeekBar.getProgress());
+//            }
+//        });
+
+
+        inputAmountTextView.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+                // Do Nothing
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 doCalculations(tipPercentageSeekBar.getProgress());
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                // Do Nothing
             }
         });
 
+
         // Override Seek Bar Change Listener
         tipPercentageSeekBar.setOnSeekBarChangeListener(newSeekBarChangeListener());
+    }
+
+   // percentSeekBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener()
+
+    private TextWatcher setNewTextWatcher()
+    {
+        return new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        };
     }
 
     private SeekBar.OnSeekBarChangeListener newSeekBarChangeListener() {
@@ -57,6 +121,9 @@ public class MainActivity extends AppCompatActivity {
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 tipPercentageTextView.setText(String.valueOf(progress) + "%");
                 doCalculations(progress);
+                currentBill.setTipPercent(tipPercentageSeekBar.getProgress() / 100);
+                //tipPercentageTextView.setText(percent.format(currentBill.getTipPercent());
+                //calculateBill();
             }
 
             @Override
@@ -91,14 +158,18 @@ public class MainActivity extends AppCompatActivity {
         tipAmountStr = String.format(MONEY_FORMAT, tipAmount);
         totalAmountStr = String.format(MONEY_FORMAT, total);
 
-        tipAmountTextView.setText(tipAmountStr);
-        totalAmountTextView.setText(totalAmountStr);
+       // tipAmountTextView.setText(tipAmountStr);
+       // totalAmountTextView.setText(totalAmountStr);
+
+        tipAmountTextView.setText(currency.format(tipAmount));
+        totalAmountTextView.setText(currency.format(total));
+
     }
 
     private double caculateTip(double amount, int tipPercentage) {
         double percent, result;
 
-        percent = amount == 0 ? 0 : (double) tipPercentage / 100;
+        percent =  (double) tipPercentage / 100;
         result = amount * percent;
 
         Log.d("calculate Tip", String.valueOf(result));
