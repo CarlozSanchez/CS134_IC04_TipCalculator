@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity">
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:id="@+id/tipAmountRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/default_gap"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginTop="@dimen/default_gap"
+            android:layout_marginEnd="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap">
+
+            <EditText
+                android:id="@+id/amountEditText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_span="2"
+                android:layout_weight="1"
+                android:background="@color/light_blue"
+                android:ems="10"
+                android:hint="@string/hint_message"
+                android:inputType="numberDecimal"
+                android:paddingTop="@dimen/default_gap"
+                android:paddingBottom="@dimen/default_gap"
+                android:textAlignment="center"
+                android:textSize="24sp"
+                android:textStyle="bold" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tipPercentageRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/default_gap"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginTop="@dimen/default_gap"
+            android:layout_marginEnd="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap">
+
+            <TextView
+                android:id="@+id/tipPercentageTexttView"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tip_percentage"
+                android:textSize="18sp" />
+
+            <SeekBar
+                android:id="@+id/tipPercentageSeekBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:clickable="false"
+                android:indeterminate="false"
+                android:max="30"
+                android:progress="15" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/tipRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/default_gap"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginTop="@dimen/default_gap"
+            android:layout_marginEnd="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap">
+
+            <TextView
+                android:id="@+id/tipLabelTextView"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/tip"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/tipAmountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:background="@color/light_orange"
+                android:paddingTop="@dimen/default_gap"
+                android:paddingBottom="@dimen/default_gap"
+                android:text="@string/default_money_value"
+                android:textSize="18sp" />
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/totalRow"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/default_gap"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginTop="@dimen/default_gap"
+            android:layout_marginEnd="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap">
+
+            <TextView
+                android:id="@+id/totalLabelTextView"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/total"
+                android:textSize="18sp" />
+
+            <TextView
+                android:id="@+id/totalAmountTextView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="5"
+                android:background="@color/light_orange"
+                android:paddingTop="@dimen/default_gap"
+                android:paddingBottom="@dimen/default_gap"
+                android:text="@string/default_money_value"
+                android:textSize="18sp" />
+        </TableRow>
+    </TableLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
